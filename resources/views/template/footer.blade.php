@@ -1,0 +1,1 @@
+<script type="text/javascript" src="{{ url('resources/js/app.js') }}"></script>
