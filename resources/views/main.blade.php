@@ -6,7 +6,7 @@
 	<title>CMS - PIC</title>
 </head>
 	@include('template.header')
-<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
+<body data-theme="default" data-url="{{ url('/').'/' }}" id="body" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
 	<div class="wrapper">
 		@include('template.sidebar')
 		<div class="main">
