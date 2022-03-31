@@ -14,4 +14,5 @@ class department extends Model
         'name',
         'status'
     ];
+
 }

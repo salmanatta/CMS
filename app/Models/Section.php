@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Section extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+    public function department()
+    {
+        return $this->hasOne(department::class,'id' , 'dept_id');
+    }
+
 }

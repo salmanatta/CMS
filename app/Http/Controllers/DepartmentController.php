@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DepartmentFormRequest;
 use App\Models\department;
 use App\Http\Controllers\Controller;
+use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DepartmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -95,4 +102,41 @@ class DepartmentController extends Controller
         $deptData = department::where('name','like','%'.$request->get('query').'%')->orWhere('code','like','%'.$request->get('query').'%')->get();
         return view('department-List',compact('deptData'));
     }
+    public function showSection()
+    {
+        $section = Section::all();
+        return view('section-list',compact('section'));
+    }
+    public function createSection()
+    {
+        $dept = department::all();
+        return view("section", compact('dept'));
+    }
+    public function insertSection(Request $request)
+    {
+        $request->validate(
+        [
+            'dept_id'=>'required',
+            'name'=>'required'
+        ],
+        [
+            'dept_id.required'=>'Department field is required',
+            'name.required'=>'Section Name field is required'
+            ]
+        );
+        Section::create(['dept_id'=> $request->dept_id,
+                        'name'=> $request->name,
+                        'status'=> $request->status]);
+        return redirect('addSection')->with('success','Record Added Successfully');
+    }
+    public function editSection(Section $section)
+    {
+        $dept = department::all();
+        return view('section',compact('section','dept'));
+    }
+    public function updateSection(Section $section)
+    {
+        return $section;
+    }
+
 }

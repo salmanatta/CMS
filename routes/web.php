@@ -18,10 +18,16 @@ use App\Http\Controllers\TicketsController;
 |
 */
 //route::group(['middleware'=>"web"],function (){
-//    Auth::routes();
+Auth::routes();
     Route::resource('department',DepartmentController::class);
     Route::get('/', [DashboardController::class , 'showDashboard']);
     Route::get('deptSearch',[DepartmentController::class,'search']);
+//    Section Routes
+    Route::get('section',[DepartmentController::class,'showSection'])->name('section');
+    Route::get('addSection',[DepartmentController::class,'createSection']);
+    Route::post('insertSection',[DepartmentController::class,'insertSection']);
+    Route::get('editSection/{section}',[DepartmentController::class,'editSection']);
+    Route::PATCH('updateSection/{section}',[DepartmentController::class,'updateSection']);
 
 //Route::get('addTicket',[DashboardController::class,'addTicket']);
     Route::get('tickets',[TicketsController::class,'index']);
@@ -32,3 +38,5 @@ use App\Http\Controllers\TicketsController;
 
 Route::post('loginDashobard',[DashboardController::class,'loginAuth']);
 Route::get('dashboard',[DashboardController::class,'dashboard']);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

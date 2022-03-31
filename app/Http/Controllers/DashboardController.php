@@ -15,7 +15,8 @@ class DashboardController extends Controller
 
     public function showDashboard()
     {
-        return view("login");
+
+        return view("dashboard");
     }
     public function addTicket()
     {

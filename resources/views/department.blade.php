@@ -33,7 +33,7 @@
                             <span style="color:red">@error('name') {{ $message }} @enderror</span>
                         </div>
                         <div class="float-end">
-                            <button type="button" class="btn btn-danger ">Exit</button>
+                            <a class="btn btn-danger" href="{{ route('department.index') }}">Exit</a>
                             <button type="submit" class="btn btn-primary">{{isset($data) ? 'Update' : 'Save'}}</button>
                         </div>
                     </form>

@@ -1,5 +1,9 @@
 @extends('main')
 @section('content')
+    {{ Auth::user()->name }}
+    {{ Auth::user()->id }}
+
+
 <div class="container-fluid p-0">
 
 					<div class="row mb-2 mb-xl-3">
@@ -350,15 +354,15 @@
 								<tr><th class="sorting sorting_asc" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Name</th><th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Start Date: activate to sort column ascending">Start Date</th><th class="d-none d-xl-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="End Date: activate to sort column ascending">End Date</th><th class="sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Status</th><th class="d-none d-md-table-cell sorting" tabindex="0" aria-controls="datatables-dashboard-projects" rowspan="1" colspan="1" aria-label="Assignee: activate to sort column ascending">Assignee</th></tr>
 							</thead>
 							<tbody>
-								
-								
-								
-								
-								
-								
-								
-								
-								
+
+
+
+
+
+
+
+
+
 							<tr class="odd">
 									<td class="sorting_1">Project Apollo</td>
 									<td class="d-none d-xl-table-cell">01/01/2021</td>

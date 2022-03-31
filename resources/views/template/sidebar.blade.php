@@ -56,13 +56,13 @@
                                             <line x1="3" y1="9" x2="21" y2="9"></line>
                                             <line x1="9" y1="21" x2="9" y2="9"></line>
                                         </svg>
-                                        <span class="align-middle">Pages</span>
+                                        <span class="align-middle">Setup</span>
                                     </a>
                                     <ul id="pages" class="sidebar-dropdown list-unstyled collapse "
                                         data-bs-parent="#sidebar">
-                                        <li class="sidebar-item"><a class="sidebar-link" href="pages-profile.html">Profile</a>
+                                        <li class="sidebar-item"><a class="sidebar-link" href="{{ route('department.index') }}">Department</a>
                                         </li>
-                                        <li class="sidebar-item"><a class="sidebar-link" href="pages-settings.html">Settings</a>
+                                        <li class="sidebar-item"><a class="sidebar-link" href="{{ route('section') }}">Section</a>
                                         </li>
                                         <li class="sidebar-item"><a class="sidebar-link" href="pages-clients.html">Clients</a>
                                         </li>
