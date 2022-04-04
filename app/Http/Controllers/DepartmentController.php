@@ -134,9 +134,13 @@ class DepartmentController extends Controller
         $dept = department::all();
         return view('section',compact('section','dept'));
     }
-    public function updateSection(Section $section)
+    public function updateSection(Request $request,Section $section)
     {
-        return $section;
+        $data = Section::find($section->id);
+        $data->dept_id = $request->dept_id;
+        $data->name = $request->name;
+        $data->save();
+        return redirect('addSection')->with('success','Record Updated Successfully');
     }
 
 }

@@ -10,6 +10,7 @@
         $('#myDataTable').DataTable();
         $('#deptdropdown').change(function ()
         {
+
             let deptid = $(this).val();
             $.ajax({
                url: $("#body").attr('data-url')+'getSection',

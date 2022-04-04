@@ -37,8 +37,8 @@
                                             <span style="color:red"> {{ $errors->first('name') }}</span>
                                         </div>
                                         <div class="float-end">
-                                            <a class="btn btn-danger" href="{{ route('section') }}">Exit</a>
                                             <button type="submit" class="btn btn-primary">{{isset($section) ? 'Update' : 'Save'}}</button>
+                                            <a class="btn btn-danger" href="{{ route('section') }}">Exit</a>
                                         </div>
                                         <input type="hidden" name="status" value="1">
                                     </form>

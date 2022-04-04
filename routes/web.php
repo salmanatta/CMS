@@ -28,12 +28,14 @@ Auth::routes();
     Route::post('insertSection',[DepartmentController::class,'insertSection']);
     Route::get('editSection/{section}',[DepartmentController::class,'editSection']);
     Route::PATCH('updateSection/{section}',[DepartmentController::class,'updateSection']);
+// End Section Routes
 
 //Route::get('addTicket',[DashboardController::class,'addTicket']);
     Route::get('tickets',[TicketsController::class,'index']);
+    Route::get('ticketList',[TicketsController::class,'showTickets'])->name('showTickets');
     Route::post('getSection',[TicketsController::class,'getSection']);
     Route::post('insertTicket',[TicketsController::class,'insertTicket']);
-
+    Route::get('editTicket/{tickets}',[TicketsController::class,'editTicket']);
 //});
 
 Route::post('loginDashobard',[DashboardController::class,'loginAuth']);

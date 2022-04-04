@@ -25,7 +25,12 @@ class AddTicketFormRequest extends FormRequest
     {
         $rules =
             [
-                'RequestType'=>['required']
+                'RequestType'=>['required'],
+                'department'=>['required'],
+                'section' => ['required'],
+                'subject'=>['required'],
+                'ComplainDetails'=>['required'],
+                'priority'=>['required']
             ];
         return $rules;
     }

@@ -33,11 +33,9 @@
                                     </a>
                                     <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show"
                                         data-bs-parent="#sidebar">
-                                        <li class="sidebar-item active"><a class="sidebar-link"
-                                                                           href="dashboard-default.html">Default</a>
+                                        <li class="sidebar-item active"><a class="sidebar-link" href="dashboard-default.html">Default</a>
                                         </li>
-                                        <li class="sidebar-item"><a class="sidebar-link"
-                                                                    href="dashboard-analytics.html">Analytics</a></li>
+                                        <li class="sidebar-item"><a class="sidebar-link" href="{{ route('showTickets') }}">Add Ticket</a></li>
                                         <li class="sidebar-item"><a class="sidebar-link"
                                                                     href="dashboard-saas.html">SaaS</a></li>
                                         <li class="sidebar-item"><a class="sidebar-link" href="dashboard-social.html">Social</a>
