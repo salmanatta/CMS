@@ -5,8 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tickets extends Model
+use OwenIt\Auditing\Contracts\Auditable;
+
+class Tickets extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    protected $auditInclude = [
+        'status_id',
+        'dept_id',
+        'section_id',
+    ];
+
     use HasFactory;
 
     protected $guarded = [];
@@ -30,5 +39,9 @@ class Tickets extends Model
     public function attachments()
     {
         return $this->hasMany(TicketAttachments::class,'ticket_id','id');
+    }
+    public function comments()
+    {
+        return $this->hasMany(Ticket_comment::class,'ticket_id','id');
     }
 }

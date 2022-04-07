@@ -2,6 +2,7 @@
 
 return [
 
+    'implementation' => OwenIt\Auditing\Models\Audit::class,
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults

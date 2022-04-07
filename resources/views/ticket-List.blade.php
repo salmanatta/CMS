@@ -16,24 +16,26 @@
                             <table id="myDataTable" class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th class="col-sm-12 sorting sorting_asc" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 262px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Created Data</th>
+                                    <th class="col-sm-12 sorting sorting_asc" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 262px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Created Date</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">Logged By</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Type</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Priority</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Status</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Subject</th>
+                                    <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Department</th>
                                     <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($ticket as $tik)
                                     <tr>
-                                        <td width="10%" style="text-align: center">{{ $tik->created_at }}</td>
+                                        <td width="12%" style="text-align: center">{{ $tik->created_at }}</td>
                                         <td width="15%">{{ $tik->user->name }}</td>
                                         <td width="10%">{{ $tik->type }}</td>
                                         <td width="10%">{{ $tik->priority }}</td>
                                         <td width="10%">{{ $tik->ticketStatus->name }}</td>
                                         <td width="35%">{{ $tik->subject }}</td>
+                                        <td width="35%" style="text-align: center">{{ $tik->department->code }}</td>
                                         <td style="text-align: right" width="10%">
                                             <a href="{{ url('editTicket/'.$tik->id) }}" class="btn btn-primary">View</a>
                                         </td>

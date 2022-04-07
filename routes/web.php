@@ -36,6 +36,9 @@ Auth::routes();
     Route::post('getSection',[TicketsController::class,'getSection']);
     Route::post('insertTicket',[TicketsController::class,'insertTicket']);
     Route::get('editTicket/{tickets}',[TicketsController::class,'editTicket']);
+    Route::post('insertComment',[TicketsController::class,'insertComment']);
+        Route::get('showTicketLog',[TicketsController::class,'ticketLog']);
+
 //});
 
 Route::post('loginDashobard',[DashboardController::class,'loginAuth']);
