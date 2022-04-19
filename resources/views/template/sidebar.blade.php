@@ -33,15 +33,8 @@
                                     </a>
                                     <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show"
                                         data-bs-parent="#sidebar">
-                                        <li class="sidebar-item active"><a class="sidebar-link" href="dashboard-default.html">Default</a>
-                                        </li>
-                                        <li class="sidebar-item"><a class="sidebar-link" href="{{ route('showTickets') }}">Add Ticket</a></li>
-                                        <li class="sidebar-item"><a class="sidebar-link"
-                                                                    href="dashboard-saas.html">SaaS</a></li>
-                                        <li class="sidebar-item"><a class="sidebar-link" href="dashboard-social.html">Social</a>
-                                        </li>
-                                        <li class="sidebar-item"><a class="sidebar-link" href="dashboard-crypto.html">Crypto</a>
-                                        </li>
+                                        <li class="sidebar-item"><a class="sidebar-link" href="{{ route('showTickets') }}">Add Tickets</a></li>
+                                        <li class="sidebar-item"><a class="sidebar-link" href="{{ route('closeTickets') }}">Close Tickets</a></li>
                                     </ul>
                                 </li>
                                 <li class="sidebar-item">
@@ -58,11 +51,11 @@
                                     </a>
                                     <ul id="pages" class="sidebar-dropdown list-unstyled collapse "
                                         data-bs-parent="#sidebar">
+                                        <li class="sidebar-item"><a class="sidebar-link" href="{{ route('newUser') }}">Add User</a>
+                                        </li>
                                         <li class="sidebar-item"><a class="sidebar-link" href="{{ route('department.index') }}">Department</a>
                                         </li>
                                         <li class="sidebar-item"><a class="sidebar-link" href="{{ route('section') }}">Section</a>
-                                        </li>
-                                        <li class="sidebar-item"><a class="sidebar-link" href="pages-clients.html">Clients</a>
                                         </li>
                                     </ul>
                                 </li>

@@ -18,7 +18,7 @@ use App\Http\Controllers\TicketsController;
 |
 */
 //route::group(['middleware'=>"web"],function (){
-Auth::routes();
+    Auth::routes();
     Route::resource('department',DepartmentController::class);
     Route::get('/', [DashboardController::class , 'showDashboard']);
     Route::get('deptSearch',[DepartmentController::class,'search']);
@@ -36,12 +36,16 @@ Auth::routes();
     Route::post('getSection',[TicketsController::class,'getSection']);
     Route::post('insertTicket',[TicketsController::class,'insertTicket']);
     Route::get('editTicket/{tickets}',[TicketsController::class,'editTicket']);
+    Route::get('read-ticket/{id}/{ticket}',[TicketsController::class,'readNotification']);
     Route::post('insertComment',[TicketsController::class,'insertComment']);
-        Route::get('showTicketLog',[TicketsController::class,'ticketLog']);
+    Route::get('showTicketLog/{tickets}',[TicketsController::class,'ticketLog']);
+    Route::get('closeTickets',[TicketsController::class,'showCloseTickets'])->name('closeTickets');
 
 //});
 
-Route::post('loginDashobard',[DashboardController::class,'loginAuth']);
-Route::get('dashboard',[DashboardController::class,'dashboard']);
+    Route::post('loginDashobard',[DashboardController::class,'loginAuth']);
+    Route::get('dashboard',[DashboardController::class,'dashboard']);
+    Route::get('newUser',[DashboardController::class,'addUser'])->name('newUser');
+    Route::post('addUser',[DashboardController::class,'createUser']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

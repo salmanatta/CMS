@@ -12,6 +12,7 @@
 		<div class="main">
 			@include('template.topnav')
 			<main class="content">
+
 				@yield('content')
 			</main>
 		</div>

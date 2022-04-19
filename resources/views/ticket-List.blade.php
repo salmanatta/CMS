@@ -29,19 +29,20 @@
                                 <tbody>
                                 @foreach($ticket as $tik)
                                     <tr>
-                                        <td width="12%" style="text-align: center">{{ $tik->created_at }}</td>
-                                        <td width="15%">{{ $tik->user->name }}</td>
-                                        <td width="10%">{{ $tik->type }}</td>
-                                        <td width="10%">{{ $tik->priority }}</td>
-                                        <td width="10%">{{ $tik->ticketStatus->name }}</td>
-                                        <td width="35%">{{ $tik->subject }}</td>
-                                        <td width="35%" style="text-align: center">{{ $tik->department->code }}</td>
-                                        <td style="text-align: right" width="10%">
+                                        <td class="col-sm-2" style="text-align: center">{{ $tik->created_at }}</td>
+                                        <td class="col-sm-2">{{ $tik->user->name }}</td>
+                                        <td class="col-sm-1">{{ $tik->type }}</td>
+                                        <td class="col-sm-1">{{ $tik->priority }}</td>
+                                        <td class="col-sm-1">
+                                            <span class="@if($tik->ticketStatus->id == 1) badge bg-danger @elseif($tik->ticketStatus->id == 2) badge bg-warning @elseif($tik->ticketStatus->id == 3) badge bg-secondary @endif">{{ $tik->ticketStatus->name }}</span>
+                                            </td>
+                                        <td class="col-sm-3" >{{ $tik->subject }}</td>
+                                        <td class="col-sm-1"  style="text-align: center">{{ $tik->department->code }}</td>
+                                        <td style="text-align: right">
                                             <a href="{{ url('editTicket/'.$tik->id) }}" class="btn btn-primary">View</a>
                                         </td>
                                     </tr>
                                 @endforeach
-
                                 </tbody>
                             </table>
                         </div>

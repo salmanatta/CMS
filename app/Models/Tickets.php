@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 use OwenIt\Auditing\Contracts\Auditable;
 
 class Tickets extends Model implements Auditable
@@ -34,7 +33,7 @@ class Tickets extends Model implements Auditable
     }
     public function ticketStatus()
     {
-        return $this->hasOne(Ticket_status::class,'id','status_id');
+        return $this->belongsTo(Ticket_status::class,'status_id','id');
     }
     public function attachments()
     {
@@ -42,6 +41,6 @@ class Tickets extends Model implements Auditable
     }
     public function comments()
     {
-        return $this->hasMany(Ticket_comment::class,'ticket_id','id');
+        return $this->hasMany(Ticket_comment::class,'ticket_id','id')->orderBy('created_at','desc');
     }
 }

@@ -10,9 +10,13 @@ use App\Models\Ticket_comment;
 use App\Models\Ticket_status;
 use App\Models\TicketAttachments;
 use App\Models\Tickets;
+use App\Models\User;
 use App\Models\UserDepartments;
+use App\Notifications\TicketNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use OwenIt\Auditing\Models\Audit;
 
@@ -39,7 +43,7 @@ class TicketsController extends Controller
     {
         $pid = Tickets::create([
             'requested_user'=> Auth::user()->id,
-            'status_id'=>$request->status,
+            'status_id'=>$request->status ? '' : 1,
             'type'=>$request->RequestType,
             'dept_id'=>$request->department,
             'section_id'=>$request->section,
@@ -61,14 +65,38 @@ class TicketsController extends Controller
                 $attachment->save();
             }
         }
+//        $user = Auth::user()->first();
+        $user = UserDepartments::where('dept_id',$request->department)->get();
+//        dd($user);
+        $uname = Auth::user()->name;
+        foreach($user as $u)
+        {
+            Notification::send(User::find($u->user_id), new TicketNotification($uname,$request->subject,$request->priority,$pid->id));
+        }
+
         return redirect('tickets')->with('success','Record Added Successfully');
     }
     public function showTickets()
     {
+
         $depts = Auth::user()->department->pluck('dept_id');
-        $ticket = Tickets::whereIn('dept_id' , $depts)->get();
+        $ticket = Tickets::whereIn('dept_id' , $depts)
+                            ->Orwhere('requested_user',Auth::user()->id)
+                            ->where('status_id','<>','4')
+                            ->orderBy('id','desc')
+                            ->get();
+//        return $ticket;
+//        dd();
+
         return view('ticket-List',compact('ticket'));
     }
+
+    public function readNotification($notification , $ticket)
+    {
+        auth()->user()->notifications->where('id' , $notification)->markAsRead();
+        return redirect()->to('editTicket/'.$ticket);
+    }
+
     public function editTicket(Tickets $tickets)
     {
         $dept = department::all();
@@ -99,8 +127,20 @@ class TicketsController extends Controller
         $ticket->save();
         return redirect()->back()->with('success','Comment Added Successfully');
     }
-    public function ticketLog()
+    public function ticketLog(Tickets $tickets)
     {
-        return Tickets::with('audits')->where('id','=','7')->get();
+//        dd($tickets);
+        return view('ticket-info',compact('tickets'));
+    }
+    public function showCloseTickets()
+    {
+        $depts = Auth::user()->department->pluck('dept_id');
+        $ticket = Tickets::
+            where('status_id','4')
+            ->where('requested_user',Auth::user()->id)
+            ->orderBy('id','desc')
+            ->get();
+        return view('closeTicket-List',compact('ticket'));
+
     }
 }

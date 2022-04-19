@@ -14,4 +14,8 @@ class Ticket_comment extends Model
     {
         return $this->belongsTo(User::class , 'user_id' , 'id');
     }
+    public function statues()
+    {
+        return $this->belongsTo(Ticket_status::class,'status_id','id');
+    }
 }

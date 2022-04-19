@@ -17,7 +17,7 @@ class CreateTicketCommentsTable extends Migration
             $table->id();
             $table->bigInteger('ticket_id')->unsigned()->index();
             $table->bigInteger('user_id')->unsigned()->index();
-            $table->string('comment')->nullable();
+            $table->longText('comment')->nullable();
             $table->bigInteger('status_id')->unsigned()->index();
             $table->softDeletes();
             $table->timestamps();
