@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\TicketsController;
+use App\Http\Controllers\FixedAssetsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,6 @@ use App\Http\Controllers\TicketsController;
     Route::post('insertComment',[TicketsController::class,'insertComment']);
     Route::get('showTicketLog/{tickets}',[TicketsController::class,'ticketLog']);
     Route::get('closeTickets',[TicketsController::class,'showCloseTickets'])->name('closeTickets');
-
 //});
 
     Route::post('loginDashobard',[DashboardController::class,'loginAuth']);
@@ -49,3 +49,9 @@ use App\Http\Controllers\TicketsController;
     Route::post('addUser',[DashboardController::class,'createUser']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Fixed Assets Routes
+Route::get('item-List',[FixedAssetsController::class,'itemList']);
+Route::get('add-Item',[FixedAssetsController::class,'addItem']);
+Route::post('add-Item',[FixedAssetsController::class,'insertItem']);
+
+// End Fixed Assets Routes

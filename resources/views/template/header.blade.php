@@ -19,6 +19,8 @@
         $('#myDataTable').DataTable({
             ordering: false,
             autoWidth: true,
+            "aLengthMenu": [[50, 75, 100, -1], [50, 75, 100, "All"]],
+            "iDisplayLength": 50
         });
         $('#deptdropdown').change(function ()
         {

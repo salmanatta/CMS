@@ -12,6 +12,7 @@ use App\Models\TicketAttachments;
 use App\Models\Tickets;
 use App\Models\User;
 use App\Models\UserDepartments;
+use App\Notifications\TicketCloseNotification;
 use App\Notifications\TicketNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,15 +79,13 @@ class TicketsController extends Controller
     }
     public function showTickets()
     {
-
         $depts = Auth::user()->department->pluck('dept_id');
-        $ticket = Tickets::whereIn('dept_id' , $depts)
-                            ->Orwhere('requested_user',Auth::user()->id)
-                            ->where('status_id','<>','4')
+        $ticket = Tickets::notClosed()
+                            ->whereIn('dept_id' , $depts)
+                            ->orWhere('requested_user',Auth::user()->id)
                             ->orderBy('id','desc')
                             ->get();
-//        return $ticket;
-//        dd();
+//                            ->toSql();
 
         return view('ticket-List',compact('ticket'));
     }
@@ -105,7 +104,6 @@ class TicketsController extends Controller
     }
     public function insertComment(Request $request)
     {
-
         $request->validate(
             [
                 'comment'=>'required',
@@ -124,7 +122,13 @@ class TicketsController extends Controller
         $ticket->status_id = $request->status;
         $ticket->dept_id = $request->department;
         $ticket->section_id = $request->section;
-        $ticket->save();
+        $ticket->update();
+        if($request->status == '4')
+        {
+            Notification::send(User::find($ticket->requested_user), new TicketCloseNotification(Auth::user()->name,$ticket->subject,$request->ticketid));
+        }
+
+
         return redirect()->back()->with('success','Comment Added Successfully');
     }
     public function ticketLog(Tickets $tickets)

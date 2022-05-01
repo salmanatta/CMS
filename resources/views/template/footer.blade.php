@@ -19,6 +19,11 @@
         $("#modalid").text(comt);
     }
     $(document).ready(function (){
-
+        var notify = setInterval(getNotification,3000);
+        function getNotification()
+        {
+            var notifyCount = {{ auth()->user()->unreadnotifications->count() }};
+            document.getElementById('notifyHead').innerHTML = notifyCount+' New Notifications';
+        }
     });
 </script>

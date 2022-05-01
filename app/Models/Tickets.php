@@ -43,4 +43,9 @@ class Tickets extends Model implements Auditable
     {
         return $this->hasMany(Ticket_comment::class,'ticket_id','id')->orderBy('created_at','desc');
     }
+
+    public function scopeNotClosed($query)
+    {
+        $query->where('status_id' , '!=' , 4);
+    }
 }
