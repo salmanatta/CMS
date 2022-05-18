@@ -12,7 +12,8 @@ class FixedAssetsController extends Controller
 {
     public function itemList()
     {
-        return view('FixedAssets.item-list');
+        $items = Items::all();
+        return view('FixedAssets.item-list' , compact('items'));
     }
     public function addItem()
     {
@@ -42,4 +43,10 @@ class FixedAssetsController extends Controller
         ]);
         return redirect()->back()->with('success','Record Added Successfully');
     }
+    public function getFAItem(Request $request)
+    {
+        $fAitem = Items::where('DEPT_ID',$request->id)->get();
+        return $fAitem;
+    }
+
 }

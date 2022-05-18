@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddTicketFormRequest;
 use App\Models\department;
+use App\Models\Items;
 use App\Models\Section;
 use App\Models\Ticket_comment;
 use App\Models\Ticket_status;
@@ -31,7 +32,8 @@ class TicketsController extends Controller
     {
         $dept = department::all();
         $ticketStatus = Ticket_status::all();
-        return view("addTicket", compact('dept','ticketStatus'));
+        $FAItems = Items::all();
+        return view("addTicket", compact('dept','ticketStatus','FAItems'));
 
     }
     public function getSection(Request $request)
@@ -51,7 +53,9 @@ class TicketsController extends Controller
             'priority'=>$request->priority,
             'urgent'=>$request->urgent ? 1 : 0,
             'subject'=>$request->subject,
-            'details'=>$request->ComplainDetails
+            'details'=>$request->ComplainDetails,
+            'complain_location'=>$request->complainlocation,
+            'item_id'=>$request->FAItems ? '' : 0
             ]);
 
         $images = $request->allFiles('image');
@@ -75,19 +79,19 @@ class TicketsController extends Controller
             Notification::send(User::find($u->user_id), new TicketNotification($uname,$request->subject,$request->priority,$pid->id));
         }
 
-        return redirect('tickets')->with('success','Record Added Successfully');
+        return redirect('ticketList')->with('success','Record Added Successfully');
     }
     public function showTickets()
     {
         $depts = Auth::user()->department->pluck('dept_id');
-        $ticket = Tickets::notClosed()
-                            ->whereIn('dept_id' , $depts)
+        $user = User::where('id','!=' , \auth()->user()->id)->get();
+        $ticket = Tickets::whereIn('dept_id' , $depts)
                             ->orWhere('requested_user',Auth::user()->id)
+                            ->notClosed()
                             ->orderBy('id','desc')
                             ->get();
-//                            ->toSql();
 
-        return view('ticket-List',compact('ticket'));
+        return view('ticket-List',compact('ticket' , 'user'));
     }
 
     public function readNotification($notification , $ticket)
@@ -100,7 +104,9 @@ class TicketsController extends Controller
     {
         $dept = department::all();
         $ticketStatus = Ticket_status::all();
-        return view("addTicket", compact('dept','ticketStatus','tickets'));
+        $sections = Section::where('dept_id',$tickets->dept_id)->get();
+        $FAitems = Items::where('dept_id',$tickets->dept_id)->get();
+        return view("addTicket", compact('dept','ticketStatus','tickets','sections','FAitems'));
     }
     public function insertComment(Request $request)
     {
@@ -122,6 +128,7 @@ class TicketsController extends Controller
         $ticket->status_id = $request->status;
         $ticket->dept_id = $request->department;
         $ticket->section_id = $request->section;
+        $ticket->item_id = $request->FAItems;
         $ticket->update();
         if($request->status == '4')
         {
@@ -129,8 +136,26 @@ class TicketsController extends Controller
         }
 
 
-        return redirect()->back()->with('success','Comment Added Successfully');
+            return redirect('ticketList')->with('success','Comment Added Successfully');
     }
+
+    public function updateAssignTo($id , $ticketId)
+    {
+        $status = Ticket_status::where('name' , 'Assigned')->first();
+        $ticket = Tickets::find($ticketId);
+        $ticket->assigned_to = $id;
+        $ticket->status_id = $status->id;
+        $ticket->save();
+
+        Ticket_comment::create([
+            'ticket_id' => $ticket->id,
+            'user_id' => \auth()->user()->id,
+            'comment' => \auth()->user()->name .' Assigned To ' . User::find($id)->name,
+            'status_id' => $status->id
+        ]);
+        echo 'sdsfassfd';
+    }
+
     public function ticketLog(Tickets $tickets)
     {
 //        dd($tickets);

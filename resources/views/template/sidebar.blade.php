@@ -45,7 +45,7 @@
                                     <ul id="pages" class="sidebar-dropdown list-unstyled collapse "
                                         data-bs-parent="#sidebar">
                                         <li class="sidebar-item">
-                                            <a class="sidebar-link" href="{{ url('item-List') }}">Items</a>
+                                            <a class="sidebar-link" href="{{ url('item-List') }}">Assets</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -63,7 +63,7 @@
                                     </a>
                                     <ul id="pages" class="sidebar-dropdown list-unstyled collapse "
                                         data-bs-parent="#sidebar">
-                                        <li class="sidebar-item"><a class="sidebar-link" href="{{ route('newUser') }}">Add User</a>
+                                        <li class="sidebar-item"><a class="sidebar-link" href="{{ url('user-list') }}">Add User</a>
                                         </li>
                                         <li class="sidebar-item"><a class="sidebar-link" href="{{ route('department.index') }}">Department</a>
                                         </li>

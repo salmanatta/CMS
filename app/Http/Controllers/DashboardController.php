@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\department;
 use App\Models\User;
+use App\Models\UserDepartments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -52,9 +54,14 @@ class DashboardController extends Controller
     {
         return view('dashboard');
     }
+    public function userList()
+    {
+        $users = User::all()->sortByDesc('id');
+        return view('auth.user-list',compact('users'));
+    }
     public function addUser()
     {
-        return view('register-User');
+        return view('auth.register-User');
     }
     public function createUser(Request $request)
     {
@@ -69,7 +76,33 @@ class DashboardController extends Controller
             'password' => Hash::make($request->password),
             'status' => 1,
         ]);
-        return redirect()->back()->with('success','User Added Successfully');
-
+        return redirect('user-list')->with('success','User Added Successfully');
+    }
+    public function userDepartment($uId)
+    {
+        $user = User::where('id',$uId)->first();
+        $dept = department::all();
+        return view('auth.user-department',compact('dept','user'));
+    }
+    public function adduserDepartment(Request $request)
+    {
+        $request->validate(
+            [
+                'department'=>'required'
+            ]
+        );
+        $checkDept = UserDepartments::where('user_id',$request->userId)->Where('dept_id',$request->department)->first();
+        if($checkDept)
+        {
+            return redirect()->back()->with('success','Department Already Associated');
+        }else
+        {
+            UserDepartments::create([
+                    'user_id'=>$request->userId,
+                    'dept_id'=>$request->department,
+                ]
+            );
+            return redirect('user-list')->with('success','Department Associate Successfully');
+        }
     }
 }

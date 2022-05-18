@@ -3,17 +3,25 @@
 @section('content')
     <div class="card">
         <div class="card-header bg-light">
-            <div class="d-flex" style="align-items: center">
-                <h4 class="card-title" style="font-size: large">New Complain</h4>
-                @if(isset($tickets))
-                    <a href="{{url('showTicketLog/'.$tickets->id)}}"><img src="{{ url('resources/images/info.png') }}"
-                                                                          style="width: 20px; height: 20px"> </a>
-                @endif
+            <div class="d-flex justify-content-between" style="align-items: center">
+                <h4 class="card-title" style="font-size: large">New Complain
+                    @if(isset($tickets))
+                        <a href="{{url('showTicketLog/'.$tickets->id)}}"><img src="{{ url('resources/images/info.png') }}"
+                                                                              style="width: 20px; height: 20px"> </a>
+
+                    @endif
+                </h4>
+                <div>
+                    @if(isset($tickets))
+                        <label class="form-label">Ticket ID</label>
+                        {{$tickets->id}}
+                    @endif
+                </div>
             </div>
         </div>
         <div class="card-body">
             @if(Session::get('success'))
-                <div class="alert alert-success">
+                <div class="alert alert-success" style="width: 500px">
                     {{ Session::get('success') }}
                 </div>
             @endif
@@ -41,6 +49,14 @@
                                             value="Issue" {{ old('RequestType') == 'Issue' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Issue' ? 'selected' : '' : '' }}>
                                             Issue
                                         </option>
+                                        <option
+                                            value="Issue" {{ old('RequestType') == 'Self Assigned Task' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Self Assigned Task' ? 'selected' : '' : '' }}>
+                                            Self Assigned Task
+                                        </option>
+                                        <option
+                                            value="Issue" {{ old('RequestType') == 'Task Assigned by Senior' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Task Assigned by Senior' ? 'selected' : '' : '' }}>
+                                            Task Assigned by Senior
+                                        </option>
                                     </select>
                                     <span style="color:red">{{ $errors->first('RequestType') }}</span>
                                 </div>
@@ -58,7 +74,7 @@
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-md-4">
-                                    <label class="form-label" for="inputAddress2">Department</label>
+                                    <label class="form-label" for="inputAddress2">Related Department</label>
                                     <select class="form-select flex-grow-1" id="deptdropdown" name="department">
                                         <option value=""> -- Select Department --</option>
                                         @foreach($dept as $depth)
@@ -92,11 +108,14 @@
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-md-4">
-                                    <label class="form-label" for="inputCity">Section</label>
+                                    <label class="form-label" for="inputCity">Related Section</label>
                                     <select class="form-select flex-grow-1" id="sectiondropdown" name="section">
                                         @if(isset($tickets))
-                                            <option
-                                                value="{{$tickets->section_id}}"> {{$tickets->section->name}} </option>
+                                            <option value=""> -- Select Section --</option>
+                                            @foreach($sections as $section)
+                                                <option
+                                                    value="{{ $section->id }}" {{ isset($tickets) ? ($tickets->section_id == $section->id ? 'selected' : '' ) : '' }}>{{ $section->name }}</option>
+                                            @endforeach
                                         @else
                                             <option value=""> -- Select Section --</option>
                                         @endif
@@ -104,18 +123,37 @@
                                     <span style="color:red">{{ $errors->first('section') }}</span>
                                 </div>
                                 <div class="col-md-2"></div>
-                                <div class="mb-3 col-md-4 form-check form-switch py-4">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
-                                           name="urgent" {{ old('urgent')== 'on' ? 'checked' : '' }} {{ isset($tickets) ? ($tickets->urgent == 1 ? 'checked' : "") : ''  }} {{ isset($tickets) ? 'disabled' : '' }}>
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Urgent ?</label>
+                                <div class="mb-3 col-md-4 ui-widget">
+                                    <label class="form-label" for="FAItems">Assets (if any)</label>
+                                    <select class="form-select flex-grow-1" id="FAItems" name="FAItems">
+                                        @if(isset($tickets))
+                                            <option value=""> -- Select Asset(s) --</option>
+                                            @foreach($FAitems as $FAitem)
+                                                <option
+                                                    value="{{ $FAitem->id }}" {{ isset($tickets) ? ($tickets->item_id == $FAitem->id ? 'selected' : '' ) : '' }}>{{ $FAitem->DESCRIPTION }}</option>
+                                            @endforeach
+                                        @else
+                                            <option value=""> -- Select FA Item --</option>
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
-                            <div class="mb-3 col-md-12">
-                                <label class="form-label" for="inputState">Subject</label>
-                                <input type="text" class="form-control" id="inputEmail4"
-                                       placeholder="Enter Subject here" name="subject"
-                                       value="{{isset($tickets) ? $tickets->subject : old('subject')}}" {{isset($tickets) ? 'readonly' : ''}}>
-                                <span style="color:red">{{ $errors->first('subject') }}</span>
+                            <div class="row">
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="complainlocation">Complain Location</label>
+                                    <input type="text" class="form-control" id="complainlocation"
+                                           placeholder="Complain Location" name="complainlocation"
+                                           value="{{isset($tickets) ? $tickets->complainlocation : old('complainlocation')}}" {{isset($tickets) ? 'readonly' : ''}}>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label" for="inputState">Subject</label>
+                                    <input type="text" class="form-control" id="inputEmail4"
+                                           placeholder="Enter Subject here" name="subject"
+                                           value="{{isset($tickets) ? $tickets->subject : old('subject')}}" {{isset($tickets) ? 'readonly' : ''}}>
+                                    <span style="color:red">{{ $errors->first('subject') }}</span>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -177,6 +215,39 @@
                                 {{--                        </div>--}}
                                 <br>
                                 <hr>
+                                <h4>Comments</h4>
+                                <div class="row">
+                                    <div class="col sm-12">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">Comment By</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Status</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Comment</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px; text-align: end" aria-label="Position: activate to sort column ascending">Comment Date/Time</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            @foreach($tickets->comments as $comment)
+                                                <tr>
+                                                    <td width="10%" style="text-align: left;font-size: 12px;" >{{ $comment->user->name }}</td>
+                                                    <td width="8%" style="font-size: 12px;">{{ $comment->statues->name }}</td>
+                                                    <td width="60%" style="font-size: 12px;">{{ strip_tags(html_entity_decode($comment->comment)) }}</td>
+                                                    <td width="12%" style="text-align: end;font-size: 12px;">{{ date('d M, Y H:i:s a' , strtotime($comment->created_at)) }}</td>
+                                                </tr>
+                                            @endforeach
+                                            <tr>
+                                                <td width="10%" style="text-align: left;font-size: 12px;" >{{ $tickets->user->name }}</td>
+                                                <td width="8%" style="font-size: 12px;">Open</td>
+                                                <td width="60%" style="font-size: 12px;">Issue Created</td>
+                                                <td width="12%" style="text-align: end;font-size: 12px;">{{ date('d M, Y H:i:s a',strtotime($tickets->created_at)) }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="mb-3 col-md-12">
                                         <input type="hidden" value="{{$tickets->id}}" name="ticketid">

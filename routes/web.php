@@ -45,13 +45,21 @@ use App\Http\Controllers\FixedAssetsController;
 
     Route::post('loginDashobard',[DashboardController::class,'loginAuth']);
     Route::get('dashboard',[DashboardController::class,'dashboard']);
+    Route::get('user-list',[DashboardController::class,'userList'])->name('user-list');
+
+    Route::get('user-department/{userId}',[DashboardController::class,'userDepartment']);
+    Route::post('user-department',[DashboardController::class,'adduserDepartment']);
+
     Route::get('newUser',[DashboardController::class,'addUser'])->name('newUser');
     Route::post('addUser',[DashboardController::class,'createUser']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Fixed Assets Routes
 Route::get('item-List',[FixedAssetsController::class,'itemList']);
 Route::get('add-Item',[FixedAssetsController::class,'addItem']);
 Route::post('add-Item',[FixedAssetsController::class,'insertItem']);
+Route::post('getFAItem',[FixedAssetsController::class,'getFAItem']);
+Route::get('update-assign-to/{id}/{ticketId}',[TicketsController::class,'updateAssignTo']);
+
 
 // End Fixed Assets Routes
