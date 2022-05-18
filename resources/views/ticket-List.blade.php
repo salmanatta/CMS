@@ -4,6 +4,10 @@
 
     <div class="py-4">
         <div class="container-fluid">
+            <div class="alert alert-success alert-block py-2 px-2 d-flex justify-content-between ticketAssigned" style="width: 500px; display: none !important;">
+                <strong>Ticket assigned successfully</strong>
+                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+            </div>
             @if(Session::get('success'))
                 <div class="alert alert-success alert-block py-2 px-2 d-flex justify-content-between" style="width: 500px">
                     <strong>{{ Session::get('success') }}</strong>
@@ -43,8 +47,9 @@
                                         <td width="10%">{{ $tik->user->name }}</td>
                                         <td width="10%">
                                             <select name="" id="" class="form-select assignToUser">
+                                                <option>-</option>
                                                 @foreach($user as $u)
-                                                    <option value="{{ $u->id }}" {{ $tik->assigned_to == $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
+                                                    <option value="{{ $u->id }}" {{ $tik->assigned_to === $u->id ? 'selected' : '' }}> {{ $u->name }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
@@ -54,7 +59,7 @@
                                             <span class="@if($tik->ticketStatus->id == 1) badge bg-danger @elseif($tik->ticketStatus->id == 2) badge bg-warning @elseif($tik->ticketStatus->id == 3) badge bg-secondary @elseif($tik->ticketStatus->id == 5) badge bg-info @endif">{{ $tik->ticketStatus->name }}</span>
                                         </td>
                                         <td width="8%" style="text-align: center">{{ $tik->department->code }}</td>
-                                        <td width="14%" style="text-align: center">{{ date('d M, Y H:i:s a' , strtotime($tik->created_at)) }}</td>
+                                        <td width="14%" style="text-align: center">{{ date('D M, Y H:i:s' , strtotime($tik->created_at)) }}</td>
 {{--                                        <td style="text-align: right">--}}
 
 {{--                                            <a href="{{ url('editTicket/'.$tik->id) }}" ><i class="material-icons" style="font-size: 24px;">mode_edit</i></a>--}}

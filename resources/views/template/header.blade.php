@@ -6,7 +6,7 @@
 
 <link class="js-stylesheet" href="{{ url('resources/css/material-icons.css') }}" rel="stylesheet">
 
-<script type="text/javascript" src="{{ url('resources/js/settings.js') }}"></script>
+{{--<script type="text/javascript" src="{{ url('resources/js/settings.js') }}"></script>--}}
 <script type="text/javascript" src="{{ url('resources/js/jquery-3.6.0.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('resources/js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('resources/js/popper.min.js') }}"></script>
@@ -36,8 +36,10 @@
                 type: "GET",
                 url: $('#body').attr('data-url')+"update-assign-to/" + $(this).val()+"/"+$(this).parent().parent().find('.assignToTicketId').html(),
                 success: function(response){
-                    $('#msg').html(response);
-                    console.log(response);
+                    if (response == 1)
+                    {
+                        $(".ticketAssigned").css('display','block');
+                    }
                     // $('#settingsMessage').html(response["success"]);
                 }
             });

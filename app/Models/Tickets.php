@@ -46,6 +46,6 @@ class Tickets extends Model implements Auditable
 
     public function scopeNotClosed($query)
     {
-        $query->where('status_id' , '!=' , 4);
+        $query->where('status_id' , '<' , 5);
     }
 }

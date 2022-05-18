@@ -58,7 +58,7 @@ class TicketNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'uname'=>$this->uname.' created ticket',
+            'uname'=>$this->uname.' create a ticket for your Department',
             'subject'=>$this->subject,
             'priority'=>'With '.$this->priority.' priority',
             'ticketId'=>$this->ticketId,

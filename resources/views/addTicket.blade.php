@@ -38,23 +38,23 @@
                                             name="RequestType" {{ isset($tickets) ? 'disabled' : '' }}>
                                         <option value=""> -- Select Request Type --</option>
                                         <option
+                                            value="Complaint" {{ old('RequestType') == 'Complaint' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Complaint' ? 'selected' : '' : '' }}>
+                                            Complaint
+                                        </option>
+                                        <option
                                             value="Incident" {{ old('RequestType') == 'Incident' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Incident' ? 'selected' : '' : '' }}>
                                             Incident
                                         </option>
                                         <option
-                                            value="Training Request" {{ old('RequestType') == 'Training Request' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Training Request' ? 'selected' : '' : '' }}>
-                                            Training Request
+                                            value="Request for Information" {{ old('RequestType') == 'Request for Information' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Request for Information' ? 'selected' : '' : '' }}>
+                                            Request for Information
                                         </option>
                                         <option
-                                            value="Issue" {{ old('RequestType') == 'Issue' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Issue' ? 'selected' : '' : '' }}>
-                                            Issue
-                                        </option>
-                                        <option
-                                            value="Issue" {{ old('RequestType') == 'Self Assigned Task' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Self Assigned Task' ? 'selected' : '' : '' }}>
+                                            value="Self Assigned Task" {{ old('RequestType') == 'Self Assigned Task' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Self Assigned Task' ? 'selected' : '' : '' }}>
                                             Self Assigned Task
                                         </option>
                                         <option
-                                            value="Issue" {{ old('RequestType') == 'Task Assigned by Senior' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Task Assigned by Senior' ? 'selected' : '' : '' }}>
+                                            value="Task Assigned by Senior" {{ old('RequestType') == 'Task Assigned by Senior' ? 'selected' : '' }} {{ isset($tickets) ? $tickets->type == 'Task Assigned by Senior' ? 'selected' : '' : '' }}>
                                             Task Assigned by Senior
                                         </option>
                                     </select>
@@ -215,16 +215,16 @@
                                 {{--                        </div>--}}
                                 <br>
                                 <hr>
-                                <h4>Comments</h4>
+                                <h4>Log</h4>
                                 <div class="row">
                                     <div class="col sm-12">
                                         <table class="table table-striped">
                                             <thead>
                                             <tr>
-                                                <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">Comment By</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">User</th>
                                                 <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Status</th>
-                                                <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Comment</th>
-                                                <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px; text-align: end" aria-label="Position: activate to sort column ascending">Comment Date/Time</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending">Comments</th>
+                                                <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px; text-align: end" aria-label="Position: activate to sort column ascending">Date / Time</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -233,43 +233,53 @@
                                                 <tr>
                                                     <td width="10%" style="text-align: left;font-size: 12px;" >{{ $comment->user->name }}</td>
                                                     <td width="8%" style="font-size: 12px;">{{ $comment->statues->name }}</td>
-                                                    <td width="60%" style="font-size: 12px;">{{ strip_tags(html_entity_decode($comment->comment)) }}</td>
-                                                    <td width="12%" style="text-align: end;font-size: 12px;">{{ date('d M, Y H:i:s a' , strtotime($comment->created_at)) }}</td>
+                                                    <td width="57%" style="font-size: 12px;">{{ strip_tags(html_entity_decode($comment->comment)) }}</td>
+                                                    <td width="15%" style="text-align: end;font-size: 12px;">{{ date('D d M, Y H:i:s a' , strtotime($comment->created_at)) }}</td>
                                                 </tr>
                                             @endforeach
                                             <tr>
                                                 <td width="10%" style="text-align: left;font-size: 12px;" >{{ $tickets->user->name }}</td>
                                                 <td width="8%" style="font-size: 12px;">Open</td>
-                                                <td width="60%" style="font-size: 12px;">Issue Created</td>
-                                                <td width="12%" style="text-align: end;font-size: 12px;">{{ date('d M, Y H:i:s a',strtotime($tickets->created_at)) }}</td>
+                                                <td width="57%" style="font-size: 12px;">Issue Created</td>
+                                                <td width="15%" style="text-align: end;font-size: 12px;">{{ date('D d M, Y H:i:s a',strtotime($tickets->created_at)) }}</td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
 
+                                @if(isset($tickets))
+                                    <input type="hidden" value="{{$tickets->id}}" name="ticketid">
+                                    @if($tickets->status_id > 2)
                                 <div class="row">
                                     <div class="mb-3 col-md-12">
-                                        <input type="hidden" value="{{$tickets->id}}" name="ticketid">
+
                                         <label class="form-label">Comment</label>
                                         <textarea class="form-control" id="editor2" name="comment"></textarea>
                                         <span style="color:red">{!! $errors->first('comment') !!}</span>
                                     </div>
-                                    <div class="mb-3 col-md-4">
-                                        <label class="form-label">Status</label>
-                                        <select class="form-select flex-grow-1" name="status">
-                                            <option value=""> -- Select Status --</option>
-                                            @foreach($ticketStatus as $status)
-                                                <option
-                                                    value="{{ $status->id }}" {{ isset($tickets) ? ($tickets->status_id == $status->id ? 'selected' : '') : '' }}>{{ $status->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <span style="color:red">{{ $errors->first('status') }}</span>
-                                    </div>
+
+                                </div>
+                                    @endif
+                                @endif
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label">Status</label>
+                                    <select class="form-select flex-grow-1" name="status">
+                                        <option value=""> -- Select Status --</option>
+                                        @foreach($ticketStatus as $status)
+                                            <option
+                                                value="{{ $status->id }}" {{ isset($tickets) ? ($tickets->status_id == $status->id ? 'selected' : '') : '' }}>{{ $status->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span style="color:red">{{ $errors->first('status') }}</span>
                                 </div>
                             @endif
                             <div class="btn-group float-end">
-                                <button type="submit" class="btn btn-primary btn-block mt-2 me-2">Save</button>
+                                @if(isset($tickets))
+                                    <button type="submit" class="btn btn-warning btn-block mt-2 me-2">Update</button>
+                                @else
+                                    <button type="submit" class="btn btn-primary btn-block mt-2 me-2">Save</button>
+                                @endif
                                 <a class="btn btn-danger mt-2 me-2" href="{{ route('showTickets') }}">Exit</a>
                             </div>
                         </form>

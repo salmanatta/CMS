@@ -34,7 +34,7 @@
                                     <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse show"
                                         data-bs-parent="#sidebar">
                                         <li class="sidebar-item"><a class="sidebar-link" href="{{ route('showTickets') }}">Add Tickets</a></li>
-                                        <li class="sidebar-item"><a class="sidebar-link" href="{{ route('closeTickets') }}">Close Tickets</a></li>
+                                        <li class="sidebar-item"><a class="sidebar-link" href="{{ route('closeTickets') }}">Resolve Tickets</a></li>
                                     </ul>
                                 </li>
                                 <li class="sidebar-item">

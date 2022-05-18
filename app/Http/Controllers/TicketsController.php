@@ -13,6 +13,7 @@ use App\Models\TicketAttachments;
 use App\Models\Tickets;
 use App\Models\User;
 use App\Models\UserDepartments;
+use App\Notifications\TicketAssignedNotification;
 use App\Notifications\TicketCloseNotification;
 use App\Notifications\TicketNotification;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class TicketsController extends Controller
     {
         $pid = Tickets::create([
             'requested_user'=> Auth::user()->id,
-            'status_id'=>$request->status ? '' : 1,
+            'status_id'=> $request->status ? $request->status : 1,
             'type'=>$request->RequestType,
             'dept_id'=>$request->department,
             'section_id'=>$request->section,
@@ -55,7 +56,7 @@ class TicketsController extends Controller
             'subject'=>$request->subject,
             'details'=>$request->ComplainDetails,
             'complain_location'=>$request->complainlocation,
-            'item_id'=>$request->FAItems ? '' : 0
+            'item_id'=>$request->FAItems ? $request->FAItems : 0
             ]);
 
         $images = $request->allFiles('image');
@@ -71,12 +72,16 @@ class TicketsController extends Controller
             }
         }
 //        $user = Auth::user()->first();
-        $user = UserDepartments::where('dept_id',$request->department)->get();
+        $users = UserDepartments::where('dept_id',$request->department)->where('user_id' , '!=' , \auth()->user()->id)->get();
 //        dd($user);
         $uname = Auth::user()->name;
-        foreach($user as $u)
+        foreach($users as $u)
         {
-            Notification::send(User::find($u->user_id), new TicketNotification($uname,$request->subject,$request->priority,$pid->id));
+            $usr = User::find($u->user_id);
+            if ($usr->notification_allowed)
+            {
+                Notification::send($usr, new TicketNotification(ucfirst($uname),$request->subject,$request->priority,$pid->id));
+            }
         }
 
         return redirect('ticketList')->with('success','Record Added Successfully');
@@ -84,7 +89,7 @@ class TicketsController extends Controller
     public function showTickets()
     {
         $depts = Auth::user()->department->pluck('dept_id');
-        $user = User::where('id','!=' , \auth()->user()->id)->get();
+        $user = User::all();
         $ticket = Tickets::whereIn('dept_id' , $depts)
                             ->orWhere('requested_user',Auth::user()->id)
                             ->notClosed()
@@ -112,7 +117,6 @@ class TicketsController extends Controller
     {
         $request->validate(
             [
-                'comment'=>'required',
                 'status'=>'required',
                 'department'=>'required',
                 'section'=>'required'
@@ -130,9 +134,9 @@ class TicketsController extends Controller
         $ticket->section_id = $request->section;
         $ticket->item_id = $request->FAItems;
         $ticket->update();
-        if($request->status == '4')
+        if($request->status == Ticket_status::where('name' , 'Resolved')->first()->id)
         {
-            Notification::send(User::find($ticket->requested_user), new TicketCloseNotification(Auth::user()->name,$ticket->subject,$request->ticketid));
+            Notification::send(User::find($ticket->requested_user), new TicketCloseNotification(Auth::user()->name,$ticket->subject,$request->ticketid , "Resolved"));
         }
 
 
@@ -153,7 +157,10 @@ class TicketsController extends Controller
             'comment' => \auth()->user()->name .' Assigned To ' . User::find($id)->name,
             'status_id' => $status->id
         ]);
-        echo 'sdsfassfd';
+
+        Notification::send(User::find($id), new TicketAssignedNotification(Auth::user()->name,$ticket->subject,$ticket->priority,$ticket->id));
+
+        echo 1;
     }
 
     public function ticketLog(Tickets $tickets)
@@ -165,11 +172,45 @@ class TicketsController extends Controller
     {
         $depts = Auth::user()->department->pluck('dept_id');
         $ticket = Tickets::
-            where('status_id','4')
+            where('status_id' , '>' ,'4')
             ->where('requested_user',Auth::user()->id)
             ->orderBy('id','desc')
             ->get();
         return view('closeTicket-List',compact('ticket'));
 
     }
+
+    public function markResolve(Tickets $id)
+    {
+        $status = Ticket_status::where('name' , 'Closed')->first()->id;
+        $id->status_id = $status;
+        $id->save();
+
+        Ticket_comment::create([
+            'ticket_id' => $id->id,
+            'user_id' => \auth()->user()->id,
+            'comment' => \auth()->user()->name .' Marked as Closed ',
+            'status_id' => $status
+        ]);
+        return redirect()->back()->with('success' , 'Ticket marked resolved successfully');
+    }
+
+    public function reOpen(Tickets $id)
+    {
+        $status = Ticket_status::where('name' , 'In-Progress')->first()->id;
+        $id->status_id = $status;
+        $id->save();
+        $usr = User::find($id->assigned_to);
+        Ticket_comment::create([
+            'ticket_id' => $id->id,
+            'user_id' => \auth()->user()->id,
+            'comment' => \auth()->user()->name .' has Re-open this ticket, assigned to ' . $usr->name,
+            'status_id' => $status
+        ]);
+
+        Notification::send($usr, new TicketAssignedNotification(Auth::user()->name,$id->subject,$id->priority,$id->id));
+        return redirect()->back()->with('success' , 'Ticket re-opened successfully');
+
+    }
+
 }

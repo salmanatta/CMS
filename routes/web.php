@@ -60,6 +60,8 @@ Route::get('add-Item',[FixedAssetsController::class,'addItem']);
 Route::post('add-Item',[FixedAssetsController::class,'insertItem']);
 Route::post('getFAItem',[FixedAssetsController::class,'getFAItem']);
 Route::get('update-assign-to/{id}/{ticketId}',[TicketsController::class,'updateAssignTo']);
+Route::get('resolve/{id}',[TicketsController::class,'markResolve']);
+Route::get('re-open/{id}',[TicketsController::class,'reOpen']);
 
 
 // End Fixed Assets Routes

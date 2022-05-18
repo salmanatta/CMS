@@ -26,6 +26,7 @@
                                     <tr>
                                         <th class="col-sm-12 sorting sorting_asc" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 262px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">User Name</th>
                                         <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">Email</th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">Department</th>
                                         <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending"></th>
                                     </tr>
                                     </thead>
@@ -34,6 +35,7 @@
                                         <tr>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
+                                            <td>{{ $user->department ? $user->department->departments->name : '' }}</td>
                                             <td style="text-align: right">
                                                 <a href="{{ url('user-department/'.$user->id) }}" class="btn btn-outline-primary">Associate Department</a>
                                             </td>

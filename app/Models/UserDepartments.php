@@ -9,4 +9,9 @@ class UserDepartments extends Model
 {
     use HasFactory;
     protected $guarded=[];
+
+    public function departments()
+    {
+        return $this->belongsTo(department::class , 'dept_id' , 'id');
+    }
 }

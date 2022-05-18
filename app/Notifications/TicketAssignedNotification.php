@@ -7,22 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TicketCloseNotification extends Notification
+class TicketAssignedNotification extends Notification
 {
     use Queueable;
-    public $status = '';
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($uname,$subject,$ticketid , $status)
+    public function __construct($uname,$subject,$priority,$ticketId)
     {
         $this->uname = $uname;
         $this->subject = $subject;
-        $this->ticketid = $ticketid;
-        $this->status = $status;
+        $this->priority = $priority;
+        $this->ticketId = $ticketId;
     }
 
     /**
@@ -59,10 +58,10 @@ class TicketCloseNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'uname'=>$this->uname.' updated ticket',
+            'uname'=> $this->uname.' assigned a ticket to you',
             'subject'=>$this->subject,
-            'priority'=>'Marked '. $this->status,
-            'ticketId'=>$this->ticketid,
+            'priority'=>'With '.$this->priority.' priority',
+            'ticketId'=>$this->ticketId,
         ];
     }
 }
