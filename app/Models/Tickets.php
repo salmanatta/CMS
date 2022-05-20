@@ -52,4 +52,6 @@ class Tickets extends Model implements Auditable
     {
         $query->where('status_id' , '<' , 5);
     }
+
 }
+
