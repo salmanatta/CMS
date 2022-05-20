@@ -24,7 +24,7 @@ class AddItemFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'FixedAsset' => 'required|unique:items,FA_NO',
+//            'FixedAsset' => 'required|unique:items,FA_NO,'.$this->items->FA_NO
         ];
     }
 }

@@ -62,6 +62,7 @@ Route::post('getFAItem',[FixedAssetsController::class,'getFAItem']);
 Route::get('update-assign-to/{id}/{ticketId}',[TicketsController::class,'updateAssignTo']);
 Route::get('resolve/{id}',[TicketsController::class,'markResolve']);
 Route::get('re-open/{id}',[TicketsController::class,'reOpen']);
-
+Route::get('edit-Item/{id}',[FixedAssetsController::class,'editItem']);
+Route::post('update-Item',[FixedAssetsController::class,'updateItem']);
 
 // End Fixed Assets Routes

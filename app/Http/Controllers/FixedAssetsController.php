@@ -41,12 +41,39 @@ class FixedAssetsController extends Controller
             'CUSTODIAN'     =>$request->Custodian,
             'CREATED_BY'    =>Auth::user()->id,
         ]);
-        return redirect()->back()->with('success','Record Added Successfully');
+        return redirect('item-List')->with('success','Record Added Successfully');
     }
     public function getFAItem(Request $request)
     {
         $fAitem = Items::where('DEPT_ID',$request->id)->get();
         return $fAitem;
     }
+    public function editItem($id)
+    {
+        $item = Items::find($id);
+        $dept = department::all();
+        return view('FixedAssets.add-Item',compact('item','dept'));
+    }
+    public function updateItem(AddItemFormRequest $request)
+    {
+        $item = Items::find($request->itemID);
+        $item->DESCRIPTION = $request->Description;
+        $item->MAJOR_TYPE = $request->MajorType;
+        $item->BRAND = $request->Brand;
+        $item->MODEL = $request->Model;
+        $item->MAKE_YEAR = $request->MakeYear;
+        $item->TECH_INFO_1 = $request->TechInfo1;
+        $item->TECH_INFO_2 = $request->TechInfo2;
+        $item->SNO = $request->sno;
+        $item->INSTALL_DATE = $request->installDate;
+        $item->VENDOR = $request->Vendor;
+        $item->BUILDING = $request->Building;
+        $item->FLOOR = $request->Floor;
+        $item->ROOM = $request->Room;
+        $item->DEPT_ID = $request->Department;
+        $item->CUSTODIAN = $request->Custodian;
+        $item->update();
+        return redirect('item-List')->with('success','Item Updated Successfully.');
 
+    }
 }

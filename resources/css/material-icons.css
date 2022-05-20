@@ -3,7 +3,7 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url("{{ url('resources/css/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2') }}");
+  src: url("{{ url('/resources/assets/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2') }}");
 }
 
 .material-icons {

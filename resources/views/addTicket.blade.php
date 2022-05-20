@@ -8,7 +8,6 @@
                     @if(isset($tickets))
                         <a href="{{url('showTicketLog/'.$tickets->id)}}"><img src="{{ url('resources/images/info.png') }}"
                                                                               style="width: 20px; height: 20px"> </a>
-
                     @endif
                 </h4>
                 <div>
@@ -250,7 +249,7 @@
 
                                 @if(isset($tickets))
                                     <input type="hidden" value="{{$tickets->id}}" name="ticketid">
-                                    @if($tickets->status_id > 2)
+                                    @if($tickets->status_id > 2 && $tickets->status_id < 5)
                                 <div class="row">
                                     <div class="mb-3 col-md-12">
 
@@ -262,6 +261,7 @@
                                 </div>
                                     @endif
                                 @endif
+                                @if($tickets->status_id < 4)
                                 <div class="mb-3 col-md-4">
                                     <label class="form-label">Status</label>
                                     <select class="form-select flex-grow-1" name="status">
@@ -273,6 +273,7 @@
                                     </select>
                                     <span style="color:red">{{ $errors->first('status') }}</span>
                                 </div>
+                                @endif
                             @endif
                             <div class="btn-group float-end">
                                 @if(isset($tickets))
@@ -280,7 +281,16 @@
                                 @else
                                     <button type="submit" class="btn btn-primary btn-block mt-2 me-2">Save</button>
                                 @endif
-                                <a class="btn btn-danger mt-2 me-2" href="{{ route('showTickets') }}">Exit</a>
+                                @if(isset($tickets))
+                                    @if($tickets->status_id > 4)
+                                        <a class="btn btn-danger mt-2 me-2" href="{{ route('closeTickets') }}">Exit</a>
+                                        @else
+                                            <a class="btn btn-danger mt-2 me-2" href="{{ route('showTickets') }}">Exit</a>
+                                    @endif
+                                @else
+                                        <a class="btn btn-danger mt-2 me-2" href="{{ route('showTickets') }}">Exit</a>
+                                @endif
+
                             </div>
                         </form>
         </div>

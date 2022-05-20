@@ -35,7 +35,6 @@ class TicketsController extends Controller
         $ticketStatus = Ticket_status::all();
         $FAItems = Items::all();
         return view("addTicket", compact('dept','ticketStatus','FAItems'));
-
     }
     public function getSection(Request $request)
     {
@@ -108,7 +107,7 @@ class TicketsController extends Controller
     public function editTicket(Tickets $tickets)
     {
         $dept = department::all();
-        $ticketStatus = Ticket_status::all();
+        $ticketStatus = Ticket_status::where('id','<>',6)->get();
         $sections = Section::where('dept_id',$tickets->dept_id)->get();
         $FAitems = Items::where('dept_id',$tickets->dept_id)->get();
         return view("addTicket", compact('dept','ticketStatus','tickets','sections','FAitems'));
@@ -192,24 +191,24 @@ class TicketsController extends Controller
             'comment' => \auth()->user()->name .' Marked as Closed ',
             'status_id' => $status
         ]);
-        return redirect()->back()->with('success' , 'Ticket marked resolved successfully');
+        return redirect()->back()->with('success' , 'Ticket marked Closed successfully');
     }
 
     public function reOpen(Tickets $id)
     {
-        $status = Ticket_status::where('name' , 'In-Progress')->first()->id;
+        $status = Ticket_status::where('name' , 'Assigned')->first()->id;
         $id->status_id = $status;
         $id->save();
         $usr = User::find($id->assigned_to);
         Ticket_comment::create([
             'ticket_id' => $id->id,
             'user_id' => \auth()->user()->id,
-            'comment' => \auth()->user()->name .' has Re-open this ticket, assigned to ' . $usr->name,
+            'comment' => \auth()->user()->name .' has Re-Open this ticket, assigned to ' . $usr->name,
             'status_id' => $status
         ]);
 
         Notification::send($usr, new TicketAssignedNotification(Auth::user()->name,$id->subject,$id->priority,$id->id));
-        return redirect()->back()->with('success' , 'Ticket re-opened successfully');
+        return redirect()->back()->with('success' , 'Ticket Re-Opened successfully');
 
     }
 

@@ -4,28 +4,21 @@
 <link class="js-stylesheet" href="{{ url('resources/css/jquery.dataTables.min.css') }}" rel="stylesheet">
 
 
-<link class="js-stylesheet" href="{{ url('resources/css/material-icons.css') }}" rel="stylesheet">
+<link class="js-stylesheet" href="{{ url('resources/css/bootstrap-icons.css') }}" rel="stylesheet">
+
+{{--<link class="js-stylesheet" href="{{ url('resources/css/materialize.min.css') }}" rel="stylesheet">--}}
+{{--<link class="js-stylesheet" href="{{ url('resources/css/style.min.css') }}" rel="stylesheet">--}}
+
+
+
+{{--<link class="js-stylesheet" href="{{ url('resources/css/material-icons.css') }}" rel="stylesheet">--}}
 
 {{--<script type="text/javascript" src="{{ url('resources/js/settings.js') }}"></script>--}}
 <script type="text/javascript" src="{{ url('resources/js/jquery-3.6.0.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('resources/js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('resources/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('resources/js/bootstrap.min.js') }}"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.css">
 
-
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"></script>
-
-
-
-
-
-{{--<script type="text/javascript" src="{{ url('resources/js/jquery.auto-complete.min.js') }}"></script>--}}
-
-
-
-{{--<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">--}}
-{{--<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">--}}
 
 
 

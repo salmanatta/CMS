@@ -15,7 +15,7 @@
                 </div>
             @endif
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-light">
                     <h4>Ticket List
                         <a href="{{ url('tickets') }}" class="btn btn-primary float-end">Add Ticket</a>
                     </h4>
@@ -46,7 +46,7 @@
                                         </td>
                                         <td width="10%">{{ $tik->user->name }}</td>
                                         <td width="10%">
-                                            <select name="" id="" class="form-select assignToUser">
+                                            <select name="" id="git " class="form-select assignToUser">
                                                 <option>-</option>
                                                 @foreach($user as $u)
                                                     <option value="{{ $u->id }}" {{ $tik->assigned_to === $u->id ? 'selected' : '' }}> {{ $u->name }}</option>

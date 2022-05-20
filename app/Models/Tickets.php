@@ -31,6 +31,10 @@ class Tickets extends Model implements Auditable
     {
         return $this->hasOne(User::class,'id' , 'requested_user');
     }
+    public function assigneduser()
+    {
+        return $this->hasOne(User::class,'id' , 'assigned_to');
+    }
     public function ticketStatus()
     {
         return $this->belongsTo(Ticket_status::class,'status_id','id');
