@@ -59,7 +59,6 @@ class AutoCloseTicket extends Command
                     'comment' => 'Ticket auto closed',
                     'status_id' => $tc->status_id
                 ]);
-
             }
         }
         return 0;

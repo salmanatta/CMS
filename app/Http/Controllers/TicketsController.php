@@ -21,7 +21,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use mysql_xdevapi\Exception;
 use OwenIt\Auditing\Models\Audit;
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
 
 class TicketsController extends Controller
 {
@@ -87,13 +90,26 @@ class TicketsController extends Controller
     }
     public function showTickets()
     {
-        $depts = Auth::user()->department->pluck('dept_id');
-        $user = User::all();
-        $ticket = Tickets::whereIn('dept_id' , $depts)
-                            ->orWhere('requested_user',Auth::user()->id)
-                            ->notClosed()
-                            ->orderBy('id','desc')
-                            ->get();
+            if(is_null(Auth::user()->department))
+            {
+                $user = User::all();
+                $ticket = Tickets::orWhere('requested_user',Auth::user()->id)
+                    ->notClosed()
+                    ->orderBy('id','desc')
+                    ->get();
+
+            }else{
+                $depts = Auth::user()->department->pluck('dept_id');
+                $user = User::all();
+                $ticket = Tickets::whereIn('dept_id' , $depts)
+                    ->orWhere('requested_user',Auth::user()->id)
+                    ->notClosed()
+                    ->orderBy('id','desc')
+                    ->get();
+            }
+
+
+
 
         return view('ticket-List',compact('ticket' , 'user'));
     }
@@ -169,14 +185,11 @@ class TicketsController extends Controller
     }
     public function showCloseTickets()
     {
-        $depts = Auth::user()->department->pluck('dept_id');
-        $ticket = Tickets::
-            where('status_id' , '>' ,'4')
-            ->where('requested_user',Auth::user()->id)
-            ->orderBy('id','desc')
-            ->get();
+        $ticket = Tickets::where('status_id' , '>' ,'4')
+                ->where('requested_user',Auth::user()->id)
+                ->orderBy('id','desc')
+                ->get();
         return view('closeTicket-List',compact('ticket'));
-
     }
 
     public function markResolve(Tickets $id)

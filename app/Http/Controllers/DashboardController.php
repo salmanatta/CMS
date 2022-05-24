@@ -66,7 +66,9 @@ class DashboardController extends Controller
     public function createUser(Request $request)
     {
         $request->validate([
+            'mrno' => ['required'],
             'name' => ['required', 'string', 'max:255'],
+            'designation' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -75,6 +77,8 @@ class DashboardController extends Controller
             'email'=>$request->email,
             'password' => Hash::make($request->password),
             'status' => 1,
+            'mr_no'=>$request->mrno,
+            'designation'=>$request->designation,
         ]);
         return redirect('user-list')->with('success','User Added Successfully');
     }

@@ -24,7 +24,9 @@
                                 <table id="myDataTable" class="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th class="col-sm-12 sorting sorting_asc" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 262px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">User Name</th>
+                                        <th class="col-sm-12 sorting sorting_asc" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 262px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">MR No</th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">User Name</th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">Designation</th>
                                         <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">Email</th>
                                         <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">Department</th>
                                         <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending"></th>
@@ -33,10 +35,12 @@
                                     <tbody>
                                     @foreach($users as $user)
                                         <tr>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->department ? $user->department->departments->name : '' }}</td>
-                                            <td style="text-align: right">
+                                            <td width="10%">{{ $user->mr_no }}</td>
+                                            <td width="20%">{{ $user->name }}</td>
+                                            <td width="20%">{{ $user->designation }}</td>
+                                            <td width="15%">{{ $user->email }}</td>
+                                            <td width="20%">{{ $user->department ? $user->department->departments->name : '' }}</td>
+                                            <td width="15%" style="text-align: right">
                                                 <a href="{{ url('user-department/'.$user->id) }}" class="btn btn-outline-primary">Associate Department</a>
                                             </td>
                                         </tr>
