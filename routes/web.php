@@ -65,4 +65,6 @@ Route::get('re-open/{id}',[TicketsController::class,'reOpen']);
 Route::get('edit-Item/{id}',[FixedAssetsController::class,'editItem']);
 Route::post('update-Item',[FixedAssetsController::class,'updateItem']);
 
+Route::get('send-email', [TicketsController::class, 'sendMail']);
+
 // End Fixed Assets Routes

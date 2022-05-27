@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddTicketFormRequest;
+use App\Mail\NotifyMail;
 use App\Models\department;
 use App\Models\Items;
 use App\Models\Section;
@@ -18,6 +19,7 @@ use App\Notifications\TicketCloseNotification;
 use App\Notifications\TicketNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -222,7 +224,16 @@ class TicketsController extends Controller
 
         Notification::send($usr, new TicketAssignedNotification(Auth::user()->name,$id->subject,$id->priority,$id->id));
         return redirect()->back()->with('success' , 'Ticket Re-Opened successfully');
+    }
+    public function sendMail()
+    {
+        Mail::to('salman.atta@pic.edu.pk')->send(new NotifyMail());
 
+        if (Mail::failures()) {
+            return response()->Fail('Sorry! Please try again latter');
+        }else{
+            return response()->success('Great! Successfully send in your mail');
+        }
     }
 
 }
