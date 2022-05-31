@@ -35,9 +35,9 @@
                                     <tbody>
                                     @foreach($users as $user)
                                         <tr>
-                                            <td width="10%">{{ $user->mr_no }}</td>
+                                            <td width="10%">{{ $user->MR_NO }}</td>
                                             <td width="20%">{{ $user->name }}</td>
-                                            <td width="20%">{{ $user->designation }}</td>
+                                            <td width="20%">{{ $user->DESIGNATION }}</td>
                                             <td width="15%">{{ $user->email }}</td>
                                             <td width="20%">{{ $user->department ? $user->department->departments->name : '' }}</td>
                                             <td width="15%" style="text-align: right">

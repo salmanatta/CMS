@@ -56,7 +56,7 @@ class DashboardController extends Controller
     }
     public function userList()
     {
-        $users = User::all()->sortByDesc('id');
+        $users = User::all();
         return view('auth.user-list',compact('users'));
     }
     public function addUser()

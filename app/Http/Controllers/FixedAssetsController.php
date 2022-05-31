@@ -13,7 +13,7 @@ class FixedAssetsController extends Controller
     public function itemList()
     {
         $items = Items::all();
-        return view('FixedAssets.item-list' , compact('items'));
+        return view('FixedAssets.item-List' , compact('items'));
     }
     public function addItem()
     {
