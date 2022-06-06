@@ -109,4 +109,32 @@ class DashboardController extends Controller
             return redirect('user-list')->with('success','Department Associate Successfully');
         }
     }
+    public function editUser($id)
+    {
+        $user = User::find($id);
+        return view('auth.register-User',compact('user'));
+    }
+    public function UpdateUser(Request $request,$users)
+    {
+//        dd($request->userId);
+        $request->validate([
+            'mrno' => ['required'],
+            'name' => ['required', 'string', 'max:255'],
+            'designation' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$users],
+            'password' => ['required', 'string', 'min:8', 'confirmed']
+        ]);
+        $users = User::find($users);
+
+        $users->mr_no = $request->mrno;
+        $users->name = $request->name;
+        $users->email = $request->email;
+        $users->designation = $request->designation;
+        if($request->password != $users->password)
+        {
+            $users->password =  Hash::make($request->password);
+        }
+        $users->save();
+        return redirect('user-list')->with('success','User Updated Successfully');
+    }
 }

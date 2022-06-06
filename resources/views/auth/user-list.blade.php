@@ -30,18 +30,22 @@
                                         <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">Email</th>
                                         <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending">Department</th>
                                         <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 50px;" aria-label="Position: activate to sort column ascending"></th>
+                                        <th class="sorting" tabindex="0" aria-controls="datatables-reponsive" rowspan="1" colspan="1" style="width: 500px;" aria-label="Position: activate to sort column ascending"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($users as $user)
                                         <tr>
-                                            <td width="10%">{{ $user->MR_NO }}</td>
+                                            <td width="10%">{{ $user->mr_no }}</td>
                                             <td width="20%">{{ $user->name }}</td>
-                                            <td width="20%">{{ $user->DESIGNATION }}</td>
+                                            <td width="15%">{{ $user->designation }}</td>
                                             <td width="15%">{{ $user->email }}</td>
                                             <td width="20%">{{ $user->department ? $user->department->departments->name : '' }}</td>
                                             <td width="15%" style="text-align: right">
                                                 <a href="{{ url('user-department/'.$user->id) }}" class="btn btn-outline-primary">Associate Department</a>
+                                            </td>
+                                            <td width="5%" style="text-align: center">
+                                                <a href="{{ url('edit-User/'.$user->id) }}"><span class="bi bi-pencil" data-rotate="90deg" style="font-size: 20px;color:#0a2730"></span></a>
                                             </td>
                                         </tr>
                                     @endforeach

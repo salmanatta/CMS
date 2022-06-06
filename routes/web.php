@@ -64,7 +64,8 @@ Route::get('resolve/{id}',[TicketsController::class,'markResolve']);
 Route::get('re-open/{id}',[TicketsController::class,'reOpen']);
 Route::get('edit-Item/{id}',[FixedAssetsController::class,'editItem']);
 Route::post('update-Item',[FixedAssetsController::class,'updateItem']);
-
 Route::get('send-email', [TicketsController::class, 'sendMail']);
+Route::get('edit-User/{id}',[DashboardController::class,'editUser']);
+Route::post('edit-User/{users}',[DashboardController::class,'UpdateUser']);
 
 // End Fixed Assets Routes
