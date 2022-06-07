@@ -101,18 +101,24 @@ class TicketsController extends Controller
                     ->get();
 
             }else{
-                $depts = Auth::user()->department->pluck('dept_id');
-                $user = User::all();
-                $ticket = Tickets::whereIn('dept_id' , $depts)
-                    ->orWhere('requested_user',Auth::user()->id)
-                    ->notClosed()
-                    ->orderBy('id','desc')
-                    ->get();
+                if(Auth::user()->is_admin == 0)
+                {
+                    $depts = Auth::user()->department->pluck('dept_id');
+                    $user = User::all();
+                    $ticket = Tickets::whereIn('dept_id' , $depts)
+                        ->orWhere('requested_user',Auth::user()->id)
+                        ->notClosed()
+                        ->orderBy('id','desc')
+                        ->get();
+                }else{
+                    $depts = Auth::user()->department->pluck('dept_id');
+                    $user = User::all();
+                    $ticket = Tickets::whereIn('dept_id' , $depts)
+                        ->orderBy('id','desc')
+                        ->get();
+                }
+
             }
-
-
-
-
         return view('ticket-List',compact('ticket' , 'user'));
     }
 
@@ -164,20 +170,17 @@ class TicketsController extends Controller
     {
         $status = Ticket_status::where('name' , 'Assigned')->first();
         $ticket = Tickets::find($ticketId);
-        $ticket->assigned_to = $id;
-        $ticket->status_id = $status->id;
-        $ticket->save();
-
-        Ticket_comment::create([
-            'ticket_id' => $ticket->id,
-            'user_id' => \auth()->user()->id,
-            'comment' => \auth()->user()->name .' Assigned To ' . User::find($id)->name,
-            'status_id' => $status->id
-        ]);
-
-        Notification::send(User::find($id), new TicketAssignedNotification(Auth::user()->name,$ticket->subject,$ticket->priority,$ticket->id));
-
-        echo 1;
+            $ticket->assigned_to = $id;
+            $ticket->status_id = $status->id;
+            $ticket->save();
+            Ticket_comment::create([
+                'ticket_id' => $ticket->id,
+                'user_id' => \auth()->user()->id,
+                'comment' => \auth()->user()->name .' Assigned To ' . User::find($id)->name,
+                'status_id' => $status->id
+            ]);
+            Notification::send(User::find($id), new TicketAssignedNotification(Auth::user()->name,$ticket->subject,$ticket->priority,$ticket->id));
+            echo 1;
     }
 
     public function ticketLog(Tickets $tickets)

@@ -142,7 +142,7 @@
                                     <label class="form-label" for="complainlocation">Complain Location</label>
                                     <input type="text" class="form-control" id="complainlocation"
                                            placeholder="Complain Location" name="complainlocation"
-                                           value="{{isset($tickets) ? $tickets->complainlocation : old('complainlocation')}}" {{isset($tickets) ? 'readonly' : ''}}>
+                                           value="{{isset($tickets) ? $tickets->complain_location : old('complainlocation')}}" {{isset($tickets) ? 'readonly' : ''}}>
                                 </div>
                             </div>
                             <div class="row">

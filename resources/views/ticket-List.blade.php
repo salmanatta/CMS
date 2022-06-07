@@ -46,17 +46,21 @@
                                         </td>
                                         <td width="10%">{{ $tik->user->name }}</td>
                                         <td width="10%">
-                                            <select name="" id="git " class="form-select assignToUser">
-                                                <option>-</option>
-                                                @foreach($user as $u)
-                                                    <option value="{{ $u->id }}" {{ $tik->assigned_to === $u->id ? 'selected' : '' }}> {{ $u->name }}</option>
-                                                @endforeach
-                                            </select>
+                                            @if($tik->ticketStatus->id == 6)
+                                                {{ $tik->assigneduser->name }}
+                                            @else
+                                                <select name="" id="git " class="form-select assignToUser">
+                                                    <option>-</option>
+                                                    @foreach($user as $u)
+                                                        <option value="{{ $u->id }}" {{ $tik->assigned_to === $u->id ? 'selected' : '' }}> {{ $u->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            @endif
                                         </td>
                                         <td width="10%">{{ $tik->type }}</td>
                                         <td width="6%">{{ $tik->priority }}</td>
                                         <td width="6%">
-                                            <span class="@if($tik->ticketStatus->id == 1) badge bg-danger @elseif($tik->ticketStatus->id == 2) badge bg-warning @elseif($tik->ticketStatus->id == 3) badge bg-secondary @elseif($tik->ticketStatus->id == 5) badge bg-info @endif">{{ $tik->ticketStatus->name }}</span>
+                                            <span class="@if($tik->ticketStatus->id == 1) badge bg-danger @elseif($tik->ticketStatus->id == 2) badge bg-warning @elseif($tik->ticketStatus->id == 3) badge bg-secondary @elseif($tik->ticketStatus->id == 5) badge bg-info @elseif($tik->ticketStatus->id == 6) badge bg-success @endif">{{ $tik->ticketStatus->name }}</span>
                                         </td>
                                         <td width="8%" style="text-align: center">{{ $tik->department->code }}</td>
                                         <td width="14%" style="text-align: center">{{ date('D M, Y H:i:s' , strtotime($tik->created_at)) }}</td>
