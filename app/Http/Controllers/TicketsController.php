@@ -60,7 +60,7 @@ class TicketsController extends Controller
             'subject'=>$request->subject,
             'details'=>$request->ComplainDetails,
             'complain_location'=>$request->complainlocation,
-            'item_id'=>$request->FAItems ? $request->FAItems : 0
+            'item_id'=>$request->FAItems
             ]);
 
         $images = $request->allFiles('image');
