@@ -46,7 +46,7 @@
                                         </td>
                                         <td width="10%">{{ $tik->user->name }}</td>
                                         <td width="10%">
-                                            @if($tik->ticketStatus->id == 6)
+                                            @if($tik->ticketStatus->id >= 5)
                                                 {{ $tik->assigneduser->name }}
                                             @else
                                                 <select name="" id="git " class="form-select assignToUser">
