@@ -44,7 +44,8 @@
                                         <td width="30%">
                                             <a style="text-decoration: none; color: #0c0c0c" class="hoverEffect" href="{{ url('editTicket/'.$tik->id) }}">{{ $tik->subject }}</a>
                                         </td>
-                                        <td width="10%">{{ $tik->user->name }}</td>
+                                        <!-- <td width="10%">{{ $tik->user->name }}</td> -->
+                                        <td width="10%">{{ $tik->reported_user }}</td>
                                         <td width="10%">
                                             @if($tik->ticketStatus->id >= 5)
                                                 {{ $tik->assigneduser->name }}

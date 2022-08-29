@@ -144,6 +144,13 @@
                                            placeholder="Complain Location" name="complainlocation"
                                            value="{{isset($tickets) ? $tickets->complain_location : old('complainlocation')}}" {{isset($tickets) ? 'readonly' : ''}}>
                                 </div>
+                                <div class="col-md-2"></div>
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="complainedby">Complained By</label>
+                                    <input type="text" class="form-control" id="complainedby"
+                                           placeholder="Complain By" name="complainedby"
+                                           value="{{isset($tickets) ? $tickets->reported_user : old('complainedby')}}" {{isset($tickets) ? 'readonly' : ''}}>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-md-12">
