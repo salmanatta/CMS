@@ -10,16 +10,15 @@
       </div>
       <div class="row">
          <div class="row ">
-            <div class=" col-3">
+            <div class=" col-2">
                <div class="card text-white bg-info">
-                  <div class="card-body">
+                  <div class="">
                      <p class="card-stats-title text-center"><i class="material-icons"></i> Total Tickets</p>
-                     <p class="card-stats-title text-center">{{ $totalICT }}</p>
+                     <p style="font-size: 30px;" class="card-stats-title text-center">{{ $totalICT }}</p>
                   </div>
                </div>
             </div>
-           
-            <div class=" col-3">
+            <div class=" col-2">
                <div class="card text-white bg-danger">
                   <div class="card-body">
                      <p class="card-stats-title text-center"><i class="material-icons"></i> Open Tickets</p>
@@ -27,23 +26,44 @@
                   </div>
                </div>
             </div>
-
-            <div class=" col-3">
-               <div class="card text-white bg-success">
+            <div class=" col-2">
+               <div class="card text-white bg-warning">
                   <div class="card-body">
-                     <p class="card-stats-title text-center"><i class="material-icons"></i> Closed Tickets</p>
-                     <p class="card-stats-title text-center">{{  isset($ictAllTicets['6'])?  $ictAllTicets['6']->count():0 }}</p>
+                     <p class="card-stats-title text-center"><i class="material-icons"></i> Assigned Tickets</p>
+                     <p class="card-stats-title text-center">{{  isset($ictAllTicets['2'])?  $ictAllTicets['2']->count():0 }}</p>
                   </div>
                </div>
             </div>
-            <div class=" col-3">
+            <div class=" col-2">
                <div class="card text-white bg-secondary">
                   <div class="card-body">
                      <p class="card-stats-title text-center"><i class="material-icons"></i> In Progress Tickets</p>
                      <p class="card-stats-title text-center">{{  isset($ictAllTicets['3'])?  $ictAllTicets['3']->count():0 }}</p>
                   </div>
                </div>
-            </div>  
+            </div> 
+            @php
+               $a = isset($ictAllTicets['5'])?  $ictAllTicets['5']->count():0;
+               $b = isset($ictAllTicets['4'])?  $ictAllTicets['4']->count():0;
+               $c = isset($ictAllTicets['7'])?  $ictAllTicets['7']->count():0;
+               $sum = $a+$b+$c;
+            @endphp
+            <div class=" col-2">
+               <div class="card text-white bg-success">
+                  <div class="card-body">
+                     <p class="card-stats-title text-center"><i class="material-icons"></i> Resolved/Deffered/On Hold</p>
+                     <p class="card-stats-title text-center">{{ $sum}}</p>
+                  </div>
+               </div>
+            </div> 
+            <div class=" col-2">
+               <div class="card text-white bg-primary">
+                  <div class="card-body">
+                     <p class="card-stats-title text-center"><i class="material-icons"></i> Closed Tickets</p>
+                     <p class="card-stats-title text-center">{{  isset($ictAllTicets['6'])?  $ictAllTicets['6']->count():0 }}</p>
+                  </div>
+               </div>
+            </div> 
          </div>
       </div>
       <!--BME Section -->
@@ -52,7 +72,7 @@
       </div>
       <div class="row">
          <div class="row ">
-            <div class=" col-3">
+            <div class=" col-2">
                <div class="card text-white bg-info">
                   <div class="card-body">
                      <p class="card-stats-title text-center"><i class="material-icons"></i> Total Tickets</p>
@@ -61,7 +81,7 @@
                </div>
             </div>
            
-            <div class=" col-3">
+            <div class=" col-2">
                <div class="card text-white bg-danger">
                   <div class="card-body">
                      <p class="card-stats-title text-center"><i class="material-icons"></i> Open Tickets</p>
@@ -69,26 +89,40 @@
                   </div>
                </div>
             </div>
-
-            <div class=" col-3">
-               <div class="card text-white bg-success">
+            <div class=" col-2">
+               <div class="card text-white bg-warning">
                   <div class="card-body">
-                     <p class="card-stats-title text-center"><i class="material-icons"></i> Closed Tickets</p>
-                     <p class="card-stats-title text-center">{{  isset($bmeAllTicets['6'])?  $bmeAllTicets['6']->count():0 }}</p>
+                     <p class="card-stats-title text-center"><i class="material-icons"></i> Assigned Tickets</p>
+                     <p class="card-stats-title text-center">{{  isset($bmeAllTicets['2'])?  $bmeAllTicets['2']->count():0 }}</p>
                   </div>
                </div>
             </div>
-            <div class=" col-3">
+            <div class=" col-2">
                <div class="card text-white bg-secondary">
                   <div class="card-body">
                      <p class="card-stats-title text-center"><i class="material-icons"></i> In Progress Tickets</p>
                      <p class="card-stats-title text-center">{{  isset($bmeAllTicets['3'])?  $bmeAllTicets['3']->count():0 }}</p>
                   </div>
                </div>
-            </div>  
+            </div> 
+            <div class=" col-2">
+               <div class="card text-white bg-success">
+                  <div class="card-body">
+                     <p class="card-stats-title text-center"><i class="material-icons"></i> Resolved Tickets</p>
+                     <p class="card-stats-title text-center">{{  isset($bmeAllTicets['5'])?  $bmeAllTicets['5']->count():0 }}</p>
+                  </div>
+               </div>
+            </div> 
+            <div class=" col-2">
+               <div class="card text-white bg-primary">
+                  <div class="card-body">
+                     <p class="card-stats-title text-center"><i class="material-icons"></i> Closed Tickets</p>
+                     <p class="card-stats-title text-center">{{  isset($bmeAllTicets['6'])?  $bmeAllTicets['6']->count():0 }}</p>
+                  </div>
+               </div>
+            </div> 
          </div>
       </div>
-    
    
       <!--BME Section -->
       <div class="col-auto  d-sm-block">
@@ -96,15 +130,16 @@
       </div>
       <div class="row">
          <div class="row ">
-            <div class=" col-3">
+            <div class=" col-2">
                <div class="card text-white bg-info">
                   <div class="card-body">
                      <p class="card-stats-title text-center"><i class="material-icons"></i> Total Tickets</p>
-                     <p class="card-stats-title text-center">{{ $totalBFM  }}</p>
+                     <p class="card-stats-title text-center">{{ $totalBFM }}</p>
                   </div>
                </div>
             </div>
-            <div class=" col-3">
+           
+            <div class=" col-2">
                <div class="card text-white bg-danger">
                   <div class="card-body">
                      <p class="card-stats-title text-center"><i class="material-icons"></i> Open Tickets</p>
@@ -112,23 +147,38 @@
                   </div>
                </div>
             </div>
-
-            <div class=" col-3">
-               <div class="card text-white bg-success">
+            <div class=" col-2">
+               <div class="card text-white bg-warning">
                   <div class="card-body">
-                     <p class="card-stats-title text-center"><i class="material-icons"></i> Closed Tickets</p>
-                     <p class="card-stats-title text-center">{{  isset($bfmAllTicets['6'])?  $bfmAllTicets['6']->count():0 }}</p>
+                     <p class="card-stats-title text-center"><i class="material-icons"></i> Assigned Tickets</p>
+                     <p class="card-stats-title text-center">{{  isset($bfmAllTicets['2'])?  $bfmAllTicets['2']->count():0 }}</p>
                   </div>
                </div>
             </div>
-            <div class=" col-3">
+            <div class=" col-2">
                <div class="card text-white bg-secondary">
                   <div class="card-body">
                      <p class="card-stats-title text-center"><i class="material-icons"></i> In Progress Tickets</p>
                      <p class="card-stats-title text-center">{{  isset($bfmAllTicets['3'])?  $bfmAllTicets['3']->count():0 }}</p>
                   </div>
                </div>
-            </div>  
+            </div> 
+            <div class=" col-2">
+               <div class="card text-white bg-success">
+                  <div class="card-body">
+                     <p class="card-stats-title text-center"><i class="material-icons"></i> Resolved Tickets</p>
+                     <p class="card-stats-title text-center">{{  isset($bfmAllTicets['5'])?  $bfmAllTicets['5']->count():0 }}</p>
+                  </div>
+               </div>
+            </div> 
+            <div class=" col-2">
+               <div class="card text-white bg-primary">
+                  <div class="card-body">
+                     <p class="card-stats-title text-center"><i class="material-icons"></i> Closed Tickets</p>
+                     <p class="card-stats-title text-center">{{  isset($bfmAllTicets['6'])?  $bfmAllTicets['6']->count():0 }}</p>
+                  </div>
+               </div>
+            </div> 
          </div>
       </div>
       
