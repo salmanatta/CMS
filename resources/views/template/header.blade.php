@@ -6,7 +6,7 @@
 
 <link class="js-stylesheet" href="{{ url('resources/css/bootstrap-icons.css') }}" rel="stylesheet">
 
-{{--<link class="js-stylesheet" href="{{ url('resources/css/materialize.min.css') }}" rel="stylesheet">--}}
+<link class="js-stylesheet" href="{{ url('resources/css/dashboard.min.css') }}" rel="stylesheet">
 {{--<link class="js-stylesheet" href="{{ url('resources/css/style.min.css') }}" rel="stylesheet">--}}
 
 

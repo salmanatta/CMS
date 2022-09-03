@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\department;
+use App\Models\Tickets;
 use App\Models\User;
 use App\Models\UserDepartments;
 use Illuminate\Http\Request;
@@ -18,7 +19,12 @@ class DashboardController extends Controller
 
     public function showDashboard()
     {
-        return view("dashboard");
+        $totalTickets = Tickets::count();
+        $totalBME = Tickets::where('dept_id',1)->get()->count();
+        $totalICT = Tickets::where('dept_id',2)->get()->count();
+        $totalBFM = Tickets::where('dept_id',3)->get()->count();
+
+        return view("dashboard",compact('totalTickets','totalBME','totalICT','totalBFM'));
     }
     public function addTicket()
     {
