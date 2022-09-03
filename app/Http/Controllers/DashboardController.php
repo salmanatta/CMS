@@ -21,10 +21,25 @@ class DashboardController extends Controller
     {
         $totalTickets = Tickets::count();
         $totalBME = Tickets::where('dept_id',1)->get()->count();
-        $totalICT = Tickets::where('dept_id',2)->get()->count();
+        $totalICT = Tickets::where('dept_id',2)->get()->count();    
         $totalBFM = Tickets::where('dept_id',3)->get()->count();
 
-        return view("dashboard",compact('totalTickets','totalBME','totalICT','totalBFM'));
+        $bmeAllTicets = Tickets::where('dept_id',1)->get()->groupBy('status_id');
+        $ictAllTicets = Tickets::where('dept_id',2)->get()->groupBy('status_id');
+        $bfmAllTicets = Tickets::where('dept_id',3)->get()->groupBy('status_id');
+        // dd($bfmAllTicets);
+        // echo( $totalICT2);   
+        // foreach($totalICT2 as $s){
+        
+        //     echo $s->count()."\n";
+            
+        // }
+        // echo '2 dfdfddddddddddddddddddddddddreport';
+        // echo $totalICT2['2'];
+        // dd( $totalICT2);
+        // return ($totalICT2);
+
+        return view("dashboard",compact('totalTickets','totalBME','totalICT','totalBFM','bmeAllTicets','ictAllTicets','bfmAllTicets'));
     }
     public function addTicket()
     {
